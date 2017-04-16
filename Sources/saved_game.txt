@@ -1,0 +1,10 @@
+--PLAYERS--
+EMIL
+SPAS
+MITKO
+IVAN
+--TURNS--
+EMIL 5 5 H ЕЗИКА
+SPAS 3 4 V ....
+MITKO 4 4 V ....
+#....
