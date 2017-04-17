@@ -17,12 +17,29 @@ do {
   print(lines)
 
 
+  let boardSectionStartIndex = lines.index(of: "--BOARD--")!
+  let lettersSectionStartIndex = lines.index(of: "--LETTERS--")!
+
+
   // ====EXTRACT BOARD====
+
+  let boardSize = lines[boardSectionStartIndex+1].components(separatedBy: " ").map { Int($0) ?? 0 }
+  print(boardSize)
 
   // bonuses = [ (Coordinates: (Int, Int), Type: String, Points: Int) ]
 
-   
+  var bonuses : [((Int, Int), String, Int)] = [((Int, Int), String, Int)]()
 
+  for l in lines[boardSectionStartIndex+2...lettersSectionStartIndex-1] {
+    let line = l.components(separatedBy: " ")
+    let row = Int(line[0]) ?? 0
+    let col = Int(line[1]) ?? 0
+    let coordinates = (row, col)
+    let type = line[2]
+    let multiplyBy = Int(line[3]) ?? 0
+    bonuses.append(coordinates, type, multiplyBy)
+  }
+  print(bonuses)
 
   // ====END, EXTRACT BOARD====
 
@@ -33,7 +50,6 @@ do {
 
   var letters : [(Character, Int, Int)] = [(Character, Int, Int)]()
 
-  let lettersSectionStartIndex = lines.index(of: "--LETTERS--")!
 
   for l in lines[lettersSectionStartIndex+1...lines.count-1] {
     let line = l.components(separatedBy: " ")
