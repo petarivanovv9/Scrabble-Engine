@@ -1,8 +1,119 @@
 import Foundation
 
+
+// === Tile class ===
+class Tile: CustomStringConvertible {
+  let letter: Character
+  let score: Int
+
+  init(letter: Character, score: Int = 0) {
+      self.letter = letter
+      self.score = score
+  }
+
+  var description: String {
+    return "\(letter) with \(score)"
+  }
+}
+// === END Tile class ===
+
+
+// === Cell class ===
+class Cell: CustomStringConvertible {
+  var index: (Int, Int)? = nil
+  var bonusType: String? = nil
+  var bonusMultiplier: Int? = nil
+  var tile: Tile? = nil
+
+  init() {
+    // self.bonusType = ""
+    // self.bonusMultiplier = 1
+  }
+
+  ////
+  // TODO NEED TO REFACTOR THE CONSTRUCTORS
+  ////
+
+  init(index: (Int, Int)) {
+    self.index = index
+  }
+
+  init(index: (Int, Int), tile: Tile) {
+    self.index = index
+    self.tile = tile
+  }
+
+  init(bonusType: String, bonusMultiplier: Int) {
+    self.bonusType = bonusType
+    self.bonusMultiplier = bonusMultiplier
+  }
+
+  init(index: (Int, Int), bonusType: String, bonusMultiplier: Int) {
+    self.index = index
+    self.bonusType = bonusType
+    self.bonusMultiplier = bonusMultiplier
+  }
+
+  init(index: (Int, Int), bonusType: String, bonusMultiplier: Int, tile: Tile) {
+    self.index = index
+    self.bonusType = bonusType
+    self.bonusMultiplier = bonusMultiplier
+    self.tile = tile
+  }
+
+  func hasBonus() -> Bool {
+    return self.bonusType != ""
+  }
+
+  func setTile(tile: Tile) {
+    self.tile = tile
+  }
+
+  func hasTile() -> Bool {
+    return self.tile != nil
+  }
+
+  var description: String {
+    return "\(index) - \(bonusType) with \(bonusMultiplier) - \(tile)"
+  }
+}
+// === END Cell class ===
+
+
+// === Board class ===
+class Board {
+  var cells: [[Cell]] = []
+
+  init(dims: (Int, Int)) {
+    self.cells = Array(
+      repeating: Array(repeating: Cell(), count: dims.1),
+      count: dims.0
+    )
+    // print("HERE")
+    // print(self.cells!)
+  }
+
+  convenience init?(dim: Int) {
+    self.init(dims: (dim, dim))
+  }
+}
+// === END Board class ===
+
+
+func printBoard(cells: [[Cell]]) {
+  for i in 0..<cells.count {
+    for j in 0..<cells[i].count {
+    // var bonusType: String? = ]]
+      print(cells[i][j])
+    }
+  }
+}
+
+
 let path = FileManager.default.currentDirectoryPath
 
-let file = "\(path)/Sources/game_configurations.txt"
+// let file = "\(path)/Sources/game_configurations.txt"
+let file = "\(path)/Sources/temp_game_configurations.txt"
 
 do {
   let gameConfigurations: String = try String(
@@ -26,6 +137,11 @@ do {
   let boardSize = lines[boardSectionStartIndex+1].components(separatedBy: " ").map { Int($0) ?? 0 }
   print(boardSize)
 
+  ///////////
+  let boardDims = (boardSize[0], boardSize[1])
+  var board = Board(dims: boardDims)
+  ///////////
+
   // bonuses = [ (Coordinates: (Int, Int), Type: String, Points: Int) ]
 
   var bonuses : [((Int, Int), String, Int)] = [((Int, Int), String, Int)]()
@@ -38,8 +154,22 @@ do {
     let type = line[2]
     let multiplyBy = Int(line[3]) ?? 0
     bonuses.append(coordinates, type, multiplyBy)
+    ///////
+    var currentCell = Cell(bonusType: type, bonusMultiplier: multiplyBy)
+    board.cells[row][col] = currentCell
+    print("BONUS")
+    print(currentCell)
+    // check for nil before unwrapping and using an optional
+    if currentCell.bonusType != nil {
+      print(currentCell.bonusType!)
+    }
+    ///////
   }
   print(bonuses)
+  printBoard(cells: board.cells)
+  print("-------------------- ")
+  print(board.cells[3][0])
+
 
   // ====END, EXTRACT BOARD====
 
