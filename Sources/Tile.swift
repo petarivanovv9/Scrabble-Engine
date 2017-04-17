@@ -1,6 +1,6 @@
 import Foundation
 
-class Tile {
+class Tile: CustomStringConvertible {
   let letter: Character
   let score: Int
 
@@ -9,10 +9,10 @@ class Tile {
       self.score = score
   }
 
-  var representation: String {
+  var description: String {
     return "\(letter) with \(score)"
   }
 }
 
-// var A_Tile = Tile(letter: "A", score: 3)
-// print(A_Tile.representation)
+var A_Tile = Tile(letter: "A", score: 3)
+print(A_Tile)
