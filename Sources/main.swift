@@ -6,7 +6,7 @@ class Tile: CustomStringConvertible {
   let letter: Character
   let score: Int
 
-  init(letter: Character, score: Int = 0) {
+  init(letter: Character, score: Int) {
       self.letter = letter
       self.score = score
   }
@@ -178,8 +178,13 @@ do {
 
   // letters = [ (Letter: Character, Occurences: Int, Points: Int) ] -> [ ("A", 8, 1), ("Б", 3, 2)]
 
-  var letters : [(Character, Int, Int)] = [(Character, Int, Int)]()
+  // var letters : [(Character, Int, Int)] = [(Character, Int, Int)]()
 
+  var tiles : [Tile] = [Tile]()
+
+  // [Tile(A, 1), Tile(A, 1), Tile(A, 1) ....]
+  // OR [(Tile(A, 1), 3) ....]
+  var tilesOccurences : [(Tile, Int)] = [(Tile, Int)]()
 
   for l in lines[lettersSectionStartIndex+1...lines.count-1] {
     let line = l.components(separatedBy: " ")
@@ -187,9 +192,22 @@ do {
     let letter = Character(line[0])
     let occurences = Int(line[1]) ?? 0
     let points = Int(line[2]) ?? 0
-    letters.append((letter, occurences, points))
+    // letters.append((letter, occurences, points))
+
+    var currentTile = Tile(letter: letter, score: points)
+    var i = occurences
+    while i > 0 {
+      i -= 1
+      tiles.append(currentTile)
+    }
+    print(currentTile)
+    print("COUNT: ")
+    print(tiles.count)
+    tilesOccurences.append((currentTile, occurences))
   }
-  print(letters)
+  // print(letters)
+  print(tiles)
+  print(tilesOccurences)
 
   // ====END, EXTRACT LETTERS====
 
