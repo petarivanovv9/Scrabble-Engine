@@ -1,12 +1,7 @@
 import Foundation
 
 
-class GameConfigParser {
-  
-  static func getLines(file: String) -> [String] {
-    let lines = file.components(separatedBy: "\n")
-    return lines
-  }
+class Parser {
 
   static func getEncodedFileContent(filename: String) -> String? {
     var file : String? = nil
@@ -15,11 +10,15 @@ class GameConfigParser {
         contentsOfFile: filename,
         encoding: String.Encoding.utf8
       )
-    }
-    catch let error {
+    } catch let error {
       print(error)
     }
     return file
+  }
+
+  static func getLines(file: String) -> [String] {
+    let lines = file.components(separatedBy: "\n")
+    return lines
   }
 
   static func removeUnnecessaryLines(lines: [String]) -> [String] {

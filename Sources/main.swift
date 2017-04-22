@@ -21,32 +21,32 @@ let saved_game_file = "\(path)/Sources/saved_game.txt"
 
 do {
 
-  var game_config = GameConfigParser.getEncodedFileContent(filename: game_config_file)!
-  var game_config_lines = GameConfigParser.getLines(file: game_config)
+  var game_config = Parser.getEncodedFileContent(filename: game_config_file)!
+  var game_config_lines = Parser.getLines(file: game_config)
 
-  game_config_lines = GameConfigParser.removeUnnecessaryLines(lines: game_config_lines)
+  game_config_lines = Parser.removeUnnecessaryLines(lines: game_config_lines)
   print(game_config_lines)
 
 
-  let boardSectionStartIndex = game_config_lines.index(of: "--BOARD--")!
-  let lettersSectionStartIndex = game_config_lines.index(of: "--LETTERS--")!
+  let board_section_start_index = game_config_lines.index(of: "--BOARD--")!
+  let letters_section_start_index = game_config_lines.index(of: "--LETTERS--")!
 
 
   // ====EXTRACT BOARD====
 
-  let boardSize = game_config_lines[boardSectionStartIndex+1].components(separatedBy: " ").map { Int($0) ?? 0 }
-  print(boardSize)
+  let board_size = game_config_lines[board_section_start_index+1].components(separatedBy: " ").map { Int($0) ?? 0 }
+  print(board_size)
 
   ///////////
-  let boardDims = (boardSize[0], boardSize[1])
-  var board = Board(dims: boardDims)
+  let board_dims = (board_size[0], board_size[1])
+  var board = Board(dims: board_dims)
   ///////////
 
   // bonuses = [ (Coordinates: (Int, Int), Type: String, Points: Int) ]
 
   var bonuses : [((Int, Int), String, Int)] = [((Int, Int), String, Int)]()
 
-  for l in game_config_lines[boardSectionStartIndex+2...lettersSectionStartIndex-1] {
+  for l in game_config_lines[board_section_start_index+2...letters_section_start_index-1] {
     let line = l.components(separatedBy: " ")
     let row = Int(line[0]) ?? 0
     let col = Int(line[1]) ?? 0
@@ -54,21 +54,19 @@ do {
     let type = line[2]
     let multiplyBy = Int(line[3]) ?? 0
     bonuses.append(coordinates, type, multiplyBy)
-    ///////
+
     var currentCell = Cell(bonusType: type, bonusMultiplier: multiplyBy)
     board.cells[row][col] = currentCell
-    print("BONUS")
-    print(currentCell)
+
     // check for nil before unwrapping and using an optional
     if currentCell.bonusType != nil {
-      print(currentCell.bonusType!)
+      // print(currentCell.bonusType!)
     }
-    ///////
   }
-  print(bonuses)
-  printBoard(cells: board.cells)
-  print("-------------------- ")
-  print(board.cells[3][0])
+  // print(bonuses)
+  // printBoard(cells: board.cells)
+  // print("-------------------- ")
+  // print(board.cells[3][0])
 
 
   // ====END, EXTRACT BOARD====
@@ -78,63 +76,52 @@ do {
 
   // letters = [ (Letter: Character, Occurences: Int, Points: Int) ] -> [ ("A", 8, 1), ("Б", 3, 2)]
 
-  // var letters : [(Character, Int, Int)] = [(Character, Int, Int)]()
-
   var tiles : [Tile] = [Tile]()
 
   // [Tile(A, 1), Tile(A, 1), Tile(A, 1) ....]
   // OR [(Tile(A, 1), 3) ....]
-  var tilesOccurences : [(Tile, Int)] = [(Tile, Int)]()
+  var tiles_occurences : [(Tile, Int)] = [(Tile, Int)]()
 
-  for l in game_config_lines[lettersSectionStartIndex+1...game_config_lines.count-1] {
+  for l in game_config_lines[letters_section_start_index+1...game_config_lines.count-1] {
     let line = l.components(separatedBy: " ")
-    print(line)
     let letter = Character(line[0])
     let occurences = Int(line[1]) ?? 0
     let points = Int(line[2]) ?? 0
     // letters.append((letter, occurences, points))
 
-    var currentTile = Tile(letter: letter, score: points)
+    var current_tile = Tile(letter: letter, score: points)
     var i = occurences
     while i > 0 {
       i -= 1
-      tiles.append(currentTile)
+      tiles.append(current_tile)
     }
-    print(currentTile)
-    print("COUNT: ")
-    print(tiles.count)
-    tilesOccurences.append((currentTile, occurences))
+    tiles_occurences.append((current_tile, occurences))
   }
   // print(letters)
-  print(tiles)
-  print(tilesOccurences)
+  // print(tiles)
+  print(tiles_occurences)
 
   // ====END, EXTRACT LETTERS====
 
 
-  print("-------END OF PARSING GAME CONFIGURATION FILE------")
-  ///////////////////////////////////////////////////////
+  print("\n" + "-------END OF PARSING GAME CONFIGURATION FILE------" + "\n")
+
 
   // PARSING SAVED GAME FILE
 
-  let savedGame: String = try String(
-    contentsOfFile: saved_game_file,
-    encoding: String.Encoding.utf8
-  )
-  var l_2 = savedGame.components(separatedBy: "\n")
+  var saved_game = Parser.getEncodedFileContent(filename: saved_game_file)!
+  var saved_game_lines = Parser.getLines(file: saved_game)
 
-  // remove unnecessary lines like commented and empty one
-  l_2 = l_2.filter { $0.isEmpty == false }
-  l_2 = l_2.filter { $0[$0.startIndex] != "#" }
-  print(l_2)
+  saved_game_lines = Parser.removeUnnecessaryLines(lines: saved_game_lines)
+  print(saved_game_lines)
 
-  let playersSectionStartIndex = l_2.index(of: "--PLAYERS--")!
-  let turnsSectionStartIndex = l_2.index(of: "--TURNS--")!
+  let playersSectionStartIndex = saved_game_lines.index(of: "--PLAYERS--")!
+  let turnsSectionStartIndex = saved_game_lines.index(of: "--TURNS--")!
 
   var players : [Player] = [Player]()
 
   // print("HERE>>")
-  for name in l_2[playersSectionStartIndex+1...turnsSectionStartIndex-1] {
+  for name in saved_game_lines[playersSectionStartIndex+1...turnsSectionStartIndex-1] {
     var curr_player = Player(name: name)
     players.append(curr_player)
   }
