@@ -14,28 +14,33 @@ func printBoard(cells: [[Cell]]) {
 let path = FileManager.default.currentDirectoryPath
 
 // let file = "\(path)/Sources/game_configurations.txt"
-let file = "\(path)/Sources/temp_game_configurations.txt"
+let game_config_file = "\(path)/Sources/temp_game_configurations.txt"
+
+let saved_game_file = "\(path)/Sources/saved_game.txt"
+
 
 do {
-  let gameConfigurations: String = try String(
-    contentsOfFile: file,
-    encoding: String.Encoding.utf8
-  )
-  var lines = gameConfigurations.components(separatedBy: "\n")
+  // let gameConfigurations: String = try String(
+  //   contentsOfFile: game_config_file,
+  //   encoding: String.Encoding.utf8
+  // )
+  var game_config = GameConfigurationsParser(filename: game_config_file)
+  var game_config_lines = game_config.getLines()
+  // var lines = gameConfigurations.components(separatedBy: "\n")
 
   // remove unnecessary lines like commented and empty one
-  lines = lines.filter { $0.isEmpty == false }
-  lines = lines.filter { $0[$0.startIndex] != "#" }
-  print(lines)
+  game_config_lines = game_config_lines.filter { $0.isEmpty == false }
+  game_config_lines = game_config_lines.filter { $0[$0.startIndex] != "#" }
+  print(game_config_lines)
 
 
-  let boardSectionStartIndex = lines.index(of: "--BOARD--")!
-  let lettersSectionStartIndex = lines.index(of: "--LETTERS--")!
+  let boardSectionStartIndex = game_config_lines.index(of: "--BOARD--")!
+  let lettersSectionStartIndex = game_config_lines.index(of: "--LETTERS--")!
 
 
   // ====EXTRACT BOARD====
 
-  let boardSize = lines[boardSectionStartIndex+1].components(separatedBy: " ").map { Int($0) ?? 0 }
+  let boardSize = game_config_lines[boardSectionStartIndex+1].components(separatedBy: " ").map { Int($0) ?? 0 }
   print(boardSize)
 
   ///////////
@@ -47,7 +52,7 @@ do {
 
   var bonuses : [((Int, Int), String, Int)] = [((Int, Int), String, Int)]()
 
-  for l in lines[boardSectionStartIndex+2...lettersSectionStartIndex-1] {
+  for l in game_config_lines[boardSectionStartIndex+2...lettersSectionStartIndex-1] {
     let line = l.components(separatedBy: " ")
     let row = Int(line[0]) ?? 0
     let col = Int(line[1]) ?? 0
@@ -87,7 +92,7 @@ do {
   // OR [(Tile(A, 1), 3) ....]
   var tilesOccurences : [(Tile, Int)] = [(Tile, Int)]()
 
-  for l in lines[lettersSectionStartIndex+1...lines.count-1] {
+  for l in game_config_lines[lettersSectionStartIndex+1...game_config_lines.count-1] {
     let line = l.components(separatedBy: " ")
     print(line)
     let letter = Character(line[0])
@@ -111,6 +116,35 @@ do {
   print(tilesOccurences)
 
   // ====END, EXTRACT LETTERS====
+
+
+  print("-------END OF PARSING GAME CONFIGURATION FILE------")
+  ///////////////////////////////////////////////////////
+
+  // PARSING SAVED GAME FILE
+
+  let savedGame: String = try String(
+    contentsOfFile: saved_game_file,
+    encoding: String.Encoding.utf8
+  )
+  var l_2 = savedGame.components(separatedBy: "\n")
+
+  // remove unnecessary lines like commented and empty one
+  l_2 = l_2.filter { $0.isEmpty == false }
+  l_2 = l_2.filter { $0[$0.startIndex] != "#" }
+  print(l_2)
+
+  let playersSectionStartIndex = l_2.index(of: "--PLAYERS--")!
+  let turnsSectionStartIndex = l_2.index(of: "--TURNS--")!
+
+  var players : [Player] = [Player]()
+
+  // print("HERE>>")
+  for name in l_2[playersSectionStartIndex+1...turnsSectionStartIndex-1] {
+    var curr_player = Player(name: name)
+    players.append(curr_player)
+  }
+  print(players)
 
 
 } catch let error {
