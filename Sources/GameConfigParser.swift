@@ -2,27 +2,28 @@ import Foundation
 
 
 class GameConfigParser {
-
-  // TODO move parsing logic for board and letters here ???
-
-  let filename : String
-  let file : String
-
-  init(filename: String) {
-    self.filename = filename
-    self.file = Helper.getEncodedFileContent(filename: filename)
-  }
-
-  func getLines() -> [String] {
-    let lines = self.file.components(separatedBy: "\n")
+  
+  static func getLines(file: String) -> [String] {
+    let lines = file.components(separatedBy: "\n")
     return lines
   }
 
+  static func getEncodedFileContent(filename: String) -> String? {
+    var file : String? = nil
+    do {
+      file = try String(
+        contentsOfFile: filename,
+        encoding: String.Encoding.utf8
+      )
+    }
+    catch let error {
+      print(error)
+    }
+    return file
+  }
+
+  static func removeUnnecessaryLines(lines: [String]) -> [String] {
+    return lines.filter { $0.isEmpty == false }.filter { $0[$0.startIndex] != "#" }
+  }
+
 }
-
-
-// let path = FileManager.default.currentDirectoryPath
-// let game_config_file = "\(path)/Sources/temp_game_configurations.txt"
-//
-// var config = GameConfigParser(filename: game_config_file)
-// print(config.getLines())

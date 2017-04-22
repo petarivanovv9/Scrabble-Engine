@@ -20,17 +20,11 @@ let saved_game_file = "\(path)/Sources/saved_game.txt"
 
 
 do {
-  // let gameConfigurations: String = try String(
-  //   contentsOfFile: game_config_file,
-  //   encoding: String.Encoding.utf8
-  // )
-  var game_config = GameConfigParser(filename: game_config_file)
-  var game_config_lines = game_config.getLines()
-  // var lines = gameConfigurations.components(separatedBy: "\n")
 
-  // remove unnecessary lines like commented and empty one
-  game_config_lines = game_config_lines.filter { $0.isEmpty == false }
-  game_config_lines = game_config_lines.filter { $0[$0.startIndex] != "#" }
+  var game_config = GameConfigParser.getEncodedFileContent(filename: game_config_file)!
+  var game_config_lines = GameConfigParser.getLines(file: game_config)
+
+  game_config_lines = GameConfigParser.removeUnnecessaryLines(lines: game_config_lines)
   print(game_config_lines)
 
 
