@@ -24,7 +24,7 @@ do {
   //   contentsOfFile: game_config_file,
   //   encoding: String.Encoding.utf8
   // )
-  var game_config = GameConfigurationsParser(filename: game_config_file)
+  var game_config = GameConfigParser(filename: game_config_file)
   var game_config_lines = game_config.getLines()
   // var lines = gameConfigurations.components(separatedBy: "\n")
 

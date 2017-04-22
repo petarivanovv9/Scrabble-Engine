@@ -1,7 +1,7 @@
 import Foundation
 
 
-class GameConfigurationsParser {
+class GameConfigParser {
 
   // TODO move parsing logic for board and letters here ???
 
@@ -24,5 +24,5 @@ class GameConfigurationsParser {
 // let path = FileManager.default.currentDirectoryPath
 // let game_config_file = "\(path)/Sources/temp_game_configurations.txt"
 //
-// var config = GameConfigurationsParser(filename: game_config_file)
+// var config = GameConfigParser(filename: game_config_file)
 // print(config.getLines())
