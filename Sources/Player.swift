@@ -1,18 +1,5 @@
 import Foundation
 
-class Tile: CustomStringConvertible {
-  let letter: Character
-  let score: Int
-
-  init(letter: Character, score: Int = 0) {
-      self.letter = letter
-      self.score = score
-  }
-
-  var description: String {
-    return "\(letter) with \(score)"
-  }
-}
 
 class Player: CustomStringConvertible {
   let name: String
@@ -38,6 +25,7 @@ class Player: CustomStringConvertible {
   }
 }
 
-var petar = Player(name: "Petar Ivanov")
-petar.updateScore(score: 10)
-print(petar)
+
+// var petar = Player(name: "Petar Ivanov")
+// petar.updateScore(score: 10)
+// print(petar)
