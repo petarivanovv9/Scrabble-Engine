@@ -1,7 +1,7 @@
 import Foundation
 
 
-class Tile: CustomStringConvertible {
+class Tile {
   let letter: Character
   let score: Int
 
@@ -9,9 +9,11 @@ class Tile: CustomStringConvertible {
       self.letter = letter
       self.score = score
   }
+}
 
+extension Tile: CustomStringConvertible {
   var description: String {
-    return "\(letter) with \(score)"
+    return "\(letter)-->\(score)"
   }
 }
 

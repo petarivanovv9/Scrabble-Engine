@@ -38,7 +38,6 @@ class Board {
       self.cells[row][col] = newValue
     }
   }
-
 }
 
 extension Board: CustomStringConvertible {

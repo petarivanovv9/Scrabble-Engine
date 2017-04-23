@@ -54,7 +54,6 @@ class Cell {
   func hasTile() -> Bool {
     return self.tile != nil
   }
-
 }
 
 extension Cell: CustomStringConvertible {
@@ -62,7 +61,6 @@ extension Cell: CustomStringConvertible {
   var description: String {
     return "\(bonusType)-\(bonusMultiplier)-\(tile)"
   }
-
 }
 
 

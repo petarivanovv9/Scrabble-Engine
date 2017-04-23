@@ -1,7 +1,7 @@
 import Foundation
 
 
-class Player: CustomStringConvertible {
+class Player {
   let name: String
   var score: Int = 0
   var tiles: [Tile] = []
@@ -19,12 +19,14 @@ class Player: CustomStringConvertible {
   func addTile(tile: Tile) {
     self.tiles.append(tile)
   }
-
-  var description: String {
-    return "\(name) with \(score)"
-  }
 }
 
+extension Player: CustomStringConvertible {
+
+  var description: String {
+    return "\(name)-->\(score)"
+  }
+}
 
 // var petar = Player(name: "Petar Ivanov")
 // petar.updateScore(score: 10)
