@@ -54,6 +54,8 @@ do {
   }
   print(board)
   print(board[3, 0])
+
+  print(">>> Is board empty? : \(board.isEmpty())")
   // print(bonuses)
   // printBoard(cells: board.cells)
   // print("-------------------- ")

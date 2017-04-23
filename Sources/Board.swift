@@ -4,6 +4,7 @@ import Foundation
 class Board {
   let rows: Int
   let columns: Int
+  let middle: Coordinate
   var cells: [[Cell]] = []
 
   typealias Coordinate = (row: Int, col: Int)
@@ -11,6 +12,7 @@ class Board {
   init(dims: (Int, Int)) {
     self.rows = dims.0
     self.columns = dims.1
+    self.middle = (row: self.rows / 2, col: self.columns / 2)
     self.cells = Array(
       repeating: Array(repeating: Cell(), count: self.columns),
       count: self.rows
@@ -36,6 +38,29 @@ class Board {
       // assert(indexIsValid(row: coordinate.row, column: coordinate.col), "Index out of range")
       assert(indexIsValid(row: row, column: col), "Index out of range")
       self.cells[row][col] = newValue
+    }
+  }
+
+  // checks is it possible to write a word on the board
+  func tryWord(word: String, start_coordinate: Coordinate, direction: String) -> Bool {
+    return false
+  }
+
+  // check the center cell of the board
+  func isEmpty() -> Bool {
+    return self.cells[middle.row][middle.col].hasTile()
+  }
+
+  // returns the score of the word
+  func addWord(word: String, start_coordinate: Coordinate, direction: String) -> Int {
+    if tryWord(word: word, start_coordinate: start_coordinate, direction: direction) == false {
+      print("Can't write the word on the board!")
+      return 0
+    } else {
+      // create tiles from the word
+      // put the tiles on the board
+      // calculate the score of the word
+      return 0
     }
   }
 }
