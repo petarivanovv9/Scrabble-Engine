@@ -1,7 +1,7 @@
 import Foundation
 
 
-class Cell: CustomStringConvertible {
+class Cell {
   var index: (Int, Int)? = nil
   var bonusType: String? = nil
   var bonusMultiplier: Int? = nil
@@ -55,9 +55,14 @@ class Cell: CustomStringConvertible {
     return self.tile != nil
   }
 
+}
+
+extension Cell: CustomStringConvertible {
+
   var description: String {
-    return "\(index) - \(bonusType) with \(bonusMultiplier) - \(tile)"
+    return "\(bonusType)-\(bonusMultiplier)-\(tile)"
   }
+
 }
 
 

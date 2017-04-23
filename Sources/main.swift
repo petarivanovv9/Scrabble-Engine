@@ -1,16 +1,6 @@
 import Foundation
 
 
-func printBoard(cells: [[Cell]]) {
-  for i in 0..<cells.count {
-    for j in 0..<cells[i].count {
-    // var bonusType: String? = ]]
-      print(cells[i][j])
-    }
-  }
-}
-
-
 let path = FileManager.default.currentDirectoryPath
 
 // let file = "\(path)/Sources/game_configurations.txt"
@@ -56,13 +46,16 @@ do {
     bonuses.append(coordinates, type, multiplyBy)
 
     var currentCell = Cell(bonusType: type, bonusMultiplier: multiplyBy)
-    board.cells[row][col] = currentCell
+    // board[row][col] = currentCell
+    board[row, col] = currentCell
 
     // check for nil before unwrapping and using an optional
     if currentCell.bonusType != nil {
       // print(currentCell.bonusType!)
     }
   }
+  print(board)
+  print(board[3, 0])
   // print(bonuses)
   // printBoard(cells: board.cells)
   // print("-------------------- ")
@@ -126,6 +119,17 @@ do {
     players.append(curr_player)
   }
   print(players)
+
+
+  //////////////
+  // THE GAME
+
+  // на всеки ход:
+  //  - дали може да се изпише думата ( за място, началото на дъската, наличие на плочки и т.н )
+  //  - смятам точките които ще бъдат добавени на съответния игра
+  //  - премахвам използваните плочки
+  //  - добавям точките и "слагам" плочките в/у дъската
+
 
 
 } catch let error {
