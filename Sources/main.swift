@@ -108,17 +108,27 @@ do {
   saved_game_lines = Parser.removeUnnecessaryLines(lines: saved_game_lines)
   print(saved_game_lines)
 
-  let playersSectionStartIndex = saved_game_lines.index(of: "--PLAYERS--")!
-  let turnsSectionStartIndex = saved_game_lines.index(of: "--TURNS--")!
+  let players_section_start_index = saved_game_lines.index(of: "--PLAYERS--")!
+  let turns_section_start_index = saved_game_lines.index(of: "--TURNS--")!
 
   var players : [Player] = [Player]()
 
   // print("HERE>>")
-  for name in saved_game_lines[playersSectionStartIndex+1...turnsSectionStartIndex-1] {
+  for name in saved_game_lines[players_section_start_index+1...turns_section_start_index-1] {
     var curr_player = Player(name: name)
     players.append(curr_player)
   }
   print(players)
+
+
+  for turn in saved_game_lines[turns_section_start_index+1...saved_game_lines.count-1] {
+    var line = turn.components(separatedBy: " ")
+    var player_name = line[0]
+    var word_start_coordinates = (row: Int(line[1]) ?? 0, col: Int(line[2]) ?? 0)
+    var word_start_direction = line[3] // vertical OR horizontal
+    var player_word = line[4]
+    print("\(player_name) -> \(word_start_coordinates) - \(word_start_direction) - \(player_word)")
+  }
 
 
   //////////////
