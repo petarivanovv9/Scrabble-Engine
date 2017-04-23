@@ -3,10 +3,8 @@ import Foundation
 
 let path = FileManager.default.currentDirectoryPath
 
-// let file = "\(path)/Sources/game_configurations.txt"
-let game_config_file = "\(path)/Sources/temp_game_configurations.txt"
-
-let saved_game_file = "\(path)/Sources/saved_game.txt"
+let game_config_file = "\(path)/Sources/game_configurations.txt"
+let saved_game_file  = "\(path)/Sources/saved_game.txt"
 
 
 do {
