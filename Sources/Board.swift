@@ -42,8 +42,8 @@ class Board {
   }
 
   // checks is it possible to write a word on the board
-  func tryWord(word: String, start_coordinate: Coordinate, direction: String) -> Bool {
-    return false
+  func tryWord(tiles_word: [Tile], start_row_col: Coordinate, direction: String) -> Bool {
+    return true
   }
 
   // check the center cell of the board
@@ -52,12 +52,11 @@ class Board {
   }
 
   // returns the score of the word
-  func addWord(word: String, start_coordinate: Coordinate, direction: String) -> Int {
-    if tryWord(word: word, start_coordinate: start_coordinate, direction: direction) == false {
+  func addWord(tiles_word: [Tile], start_row_col: Coordinate, direction: String) -> Int {
+    if tryWord(tiles_word: tiles_word, start_row_col: start_row_col, direction: direction) == false {
       print("Can't write the word on the board!")
       return 0
     } else {
-      // create tiles from the word
       // put the tiles on the board
       // calculate the score of the word
       return 0

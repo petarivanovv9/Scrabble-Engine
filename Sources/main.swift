@@ -1,6 +1,16 @@
 import Foundation
 
 
+func getLetterScore(tiles_occurences : [(Tile, Int)], letter: Character) -> Int {
+  for item in tiles_occurences {
+    if item.0.letter == letter {
+      return item.0.score
+    }
+  }
+  return 1
+}
+
+
 let path = FileManager.default.currentDirectoryPath
 
 let game_config_file = "\(path)/Sources/game_configurations.txt"
@@ -128,6 +138,15 @@ do {
     var word_start_direction = line[3] // vertical OR horizontal
     var player_word = line[4]
     print("\(player_name) -> \(word_start_coordinates) - \(word_start_direction) - \(player_word)")
+
+    // make word's tiles
+    var curr_tiles_word = Array(player_word.characters).map { Tile(letter: $0, score: getLetterScore(tiles_occurences: tiles_occurences, letter: $0)) }
+    // print(Array(player_word.characters).map { Tile(letter: $0, score: 1) })
+    print("[curr_tiles_word]: \(curr_tiles_word)")
+
+    // tiles_word: [Tile], start_row_col: Coordinate, direction: String
+    var curr_player_score = board.addWord(tiles_word: curr_tiles_word, start_row_col: word_start_coordinates, direction: word_start_direction)
+    print("[curr_player_score]: \(curr_player_score)")
   }
 
 
