@@ -23,37 +23,53 @@ class Board {
     self.init(dims: (dim, dim))
   }
 
-  func indexIsValid(row: Int, column: Int) -> Bool {
+  private func indexIsValid(_ row: Int, _ column: Int) -> Bool {
     return row >= 0 && row < rows && column >= 0 && column < columns
+  }
+
+  private func wordCoordinatesAreValid(_ coordinates: Coordinate, _ direction: Character, _ letters_count: Int) -> Bool {
+    let start_index_is_valid = indexIsValid(coordinates.row, coordinates.col)
+    var end_index_is_valid: Bool
+
+    switch direction {
+    case "H":
+      end_index_is_valid = indexIsValid(coordinates.row, coordinates.col + letters_count)
+    case "V":
+      end_index_is_valid = indexIsValid(coordinates.row + letters_count, coordinates.col)
+    default:
+      end_index_is_valid = false
+    }
+
+    return start_index_is_valid && end_index_is_valid
   }
 
   // subscript(coordinate: Coordinate) -> Cell {
   subscript(row: Int, col: Int) -> Cell {
     get {
       // assert(indexIsValid(row: coordinate.row, column: coordinate.col), "Index out of range")
-      assert(indexIsValid(row: row, column: col), "Index out of range")
+      assert(indexIsValid(row, col), "Index out of range")
       return self.cells[row][col]
     }
     set {
       // assert(indexIsValid(row: coordinate.row, column: coordinate.col), "Index out of range")
-      assert(indexIsValid(row: row, column: col), "Index out of range")
+      assert(indexIsValid(row, col), "Index out of range")
       self.cells[row][col] = newValue
     }
   }
 
   // checks is it possible to write a word on the board
-  func tryWord(tiles_word: [Tile], start_row_col: Coordinate, direction: String) -> Bool {
+  private func tryWord(_ tiles_word: [Tile], _ start_row_col: Coordinate, _ direction: Character) -> Bool {
     return true
   }
 
   // check the center cell of the board
   func isEmpty() -> Bool {
-    return self.cells[middle.row][middle.col].hasTile()
+    return self.cells[middle.row][middle.col].hasTile() == false
   }
 
   // returns the score of the word
-  func addWord(tiles_word: [Tile], start_row_col: Coordinate, direction: String) -> Int {
-    if tryWord(tiles_word: tiles_word, start_row_col: start_row_col, direction: direction) == false {
+  func addWord(tiles_word: [Tile], start_row_col: Coordinate, direction: Character) -> Int {
+    if tryWord(tiles_word, start_row_col, direction) == false {
       print("Can't write the word on the board!")
       return 0
     } else {

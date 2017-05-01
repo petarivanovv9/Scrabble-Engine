@@ -103,6 +103,7 @@ do {
   // print(letters)
   // print(tiles)
   print(tiles_occurences)
+  print("[tiles_occurences] - \(tiles_occurences)")
 
   // ====END, EXTRACT LETTERS====
 
@@ -135,7 +136,7 @@ do {
     var line = turn.components(separatedBy: " ")
     var player_name = line[0]
     var word_start_coordinates = (row: Int(line[1]) ?? 0, col: Int(line[2]) ?? 0)
-    var word_start_direction = line[3] // vertical OR horizontal
+    var word_start_direction = Character(line[3]) // vertical OR horizontal
     var player_word = line[4]
     print("\(player_name) -> \(word_start_coordinates) - \(word_start_direction) - \(player_word)")
 
@@ -153,6 +154,8 @@ do {
   //////////////
   // THE GAME
 
+  // Rack class to store the tiles
+
   // на всеки ход:
   //  - дали може да се изпише думата ( за място, началото на дъската, наличие на плочки и т.н )
   //  - смятам точките които ще бъдат добавени на съответния игра
@@ -163,4 +166,5 @@ do {
 
 } catch let error {
   print(error)
+  print("Something went wrong! Try again!")
 }
