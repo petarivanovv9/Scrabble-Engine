@@ -6,6 +6,7 @@ struct GameConfiguration {
   var bonuses: [(coordinates: (Int, Int), bonusType: String, bonusMultiplier: Int)] = [((Int, Int), String, Int)]()
 }
 
-struct GameData {
+struct SavedGameData {
   var players: [Player] = [Player]()
+  var turns: [(player: Player, start_pos: (Int, Int), direction: Direction, word: String)] = [(Player, (Int, Int), Direction, String)]()
 }
