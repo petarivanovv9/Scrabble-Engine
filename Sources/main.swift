@@ -34,18 +34,18 @@ do {
   }
   // print(board)
 
-  // for turn in saved_game_data.turns {
-  //   print(turn)
-  //   let player_word_tiles = Array(turn.word.characters).map { Tile(letter: $0, score: getLetterScore(game_config.tiles_occurences, $0)) }
-  //
-  //   let player_word_score = board.addWord(tiles_word: player_word_tiles, start_row_col: turn.start_pos, direction: turn.direction)
-  //   print(player_word_score)
-  //   print("----------------------------------")
-  // }
+  for turn in saved_game_data.turns {
+    print(turn)
+    let player_word_tiles = Array(turn.word.characters).map { Tile(letter: $0, score: getLetterScore(game_config.tiles_occurences, $0)) }
 
-  board.cells[1][2].setTile(tile: Tile(letter: "A", score: 1))
-  board.cells[3][3].setTile(tile: Tile(letter: "B", score: 1))
-  board.cells[2][3].setTile(tile: Tile(letter: "C", score: 1))
+    let player_word_score = board.addWord(tiles_word: player_word_tiles, start_row_col: turn.start_pos, direction: turn.direction)
+    print(player_word_score)
+    print("----------------------------------")
+  }
+
+  // board.cells[1][2].setTile(tile: Tile(letter: "A", score: 1))
+  // board.cells[3][3].setTile(tile: Tile(letter: "B", score: 1))
+  // board.cells[2][3].setTile(tile: Tile(letter: "C", score: 1))
   print(board)
 
   //////////////
