@@ -1,6 +1,5 @@
 import Foundation
 
-
 class Tile {
   let letter: Character
   let score: Int
@@ -16,7 +15,3 @@ extension Tile: CustomStringConvertible {
     return "\(letter)-->\(score)"
   }
 }
-
-
-// var A_Tile = Tile(letter: "A", score: 3)
-// print(A_Tile)

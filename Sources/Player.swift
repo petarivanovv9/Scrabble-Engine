@@ -20,7 +20,3 @@ extension Player: CustomStringConvertible {
     return "\(name)-->\(score)"
   }
 }
-
-// var petar = Player(name: "Petar Ivanov")
-// petar.updateScore(score: 10)
-// print(petar)

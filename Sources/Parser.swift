@@ -1,6 +1,5 @@
 import Foundation
 
-
 class Parser {
 
   static func getEncodedFileContent(filename: String) -> String? {
@@ -24,5 +23,4 @@ class Parser {
   static func removeUnnecessaryLines(lines: [String]) -> [String] {
     return lines.filter { $0.isEmpty == false }.filter { $0[$0.startIndex] != "#" }
   }
-
 }
