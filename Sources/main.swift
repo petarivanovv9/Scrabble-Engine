@@ -1,7 +1,7 @@
 import Foundation
 
 
-func getLetterScore(tiles_occurences : [(Tile, Int)], letter: Character) -> Int {
+func getLetterScore(_ tiles_occurences : [(Tile, Int)], _ letter: Character) -> Int {
   for item in tiles_occurences {
     if item.0.letter == letter {
       return item.0.score
@@ -26,12 +26,32 @@ do {
   print(saved_game_data)
   print("\n")
 
+  var board = Board(dims: game_config.board_dims)
+  // print(board)
+  for bonus in game_config.bonuses {
+    let curr_cell = Cell(bonusType: bonus.bonusType, bonusMultiplier: bonus.bonusMultiplier)
+    board[bonus.coordinates.0, bonus.coordinates.1] = curr_cell
+  }
+  // print(board)
 
+  // for turn in saved_game_data.turns {
+  //   print(turn)
+  //   let player_word_tiles = Array(turn.word.characters).map { Tile(letter: $0, score: getLetterScore(game_config.tiles_occurences, $0)) }
+  //
+  //   let player_word_score = board.addWord(tiles_word: player_word_tiles, start_row_col: turn.start_pos, direction: turn.direction)
+  //   print(player_word_score)
+  //   print("----------------------------------")
+  // }
+
+  board.cells[1][2].setTile(tile: Tile(letter: "A", score: 1))
+  board.cells[3][3].setTile(tile: Tile(letter: "B", score: 1))
+  board.cells[2][3].setTile(tile: Tile(letter: "C", score: 1))
+  print(board)
 
   //////////////
   // THE GAME
 
-  // Rack class to store the tiles
+  // possibility: Rack class to store the tiles
 
   // на всеки ход:
   //  - дали може да се изпише думата ( за място, началото на дъската, наличие на плочки и т.н )

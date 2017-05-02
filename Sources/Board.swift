@@ -69,40 +69,29 @@ class Board {
     return cells[middle.row][middle.col].hasTile() == false
   }
 
-  // private func addWordHelper(_ tiles: [Tile], _ start: Coordinate, _ direction: Direction) {
-  //
-  //   for (indx, tile) in tiles.enumerated() {
-  //     // var bonus_multiplier = 1
-  //     // if currentCell.bonusType != nil {
-  //     //   bonus_multiplier = currentCell.bonusType!
-  //     // }
-  //     var current_indx = start
-  //
-  //     switch direction {
-  //       case .Horizontal:
-  //         current_indx.col = current_indx.col + indx
-  //       case .Vertical:
-  //         current_indx.row = current_indx.row + indx
-  //     }
-  //     print(current_indx)
-  //
-  //     print(tile)
-  //     print("MAMKA MU --- \(cells[current_indx.row][current_indx.col])")
-  //     if self.cells[current_indx.row][current_indx.col].hasTile() == false {
-  //       print(self)
-  //       print("\n")
-  //       self[current_indx.row, current_indx.col].setTile(tile: tile)
-  //       //self[0, 0].setTile(tile: tile)
-  //       print(self)
-  //       print("QSHAAAAAa")
-  //     }
-  //     // print("PATKA")
-  //     // print(self[0, 2].hasTile())
-  //     // self[0, 2].setTile(tile: tile)
-  //     //
-  //     // print(self.cells)
-  //   }
-  // }
+  private func addWordHelper(_ tiles: [Tile], _ start: Coordinate, _ direction: Direction) {
+
+    for (indx, tile) in tiles.enumerated() {
+      // var bonus_multiplier = 1
+      // if curr_cell.bonusType != nil {
+      //   bonus_multiplier = curr_cell.bonusType!
+      // }
+      var curr_indx = start
+
+      switch direction {
+        case .Horizontal:
+          curr_indx.col = curr_indx.col + indx
+        case .Vertical:
+          curr_indx.row = curr_indx.row + indx
+      }
+      print(curr_indx)
+
+      if self[curr_indx.row, curr_indx.col].hasTile() == false {
+        self[curr_indx.row, curr_indx.col].setTile(tile: tile)
+				print("HERE")
+			}
+    }
+  }
 
   // returns the score of the word
   func addWord(tiles_word: [Tile], start_row_col: Coordinate, direction: Direction) -> Int {
@@ -112,7 +101,7 @@ class Board {
       return 0
     } else {
       // put the tiles on the board
-      // addWordHelper(tiles_word, start_row_col, direction)
+      addWordHelper(tiles_word, start_row_col, direction)
       // calculate the score of the word
       return 0
     }
