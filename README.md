@@ -1,5 +1,7 @@
 # Scrabble-Engine
 
+## Description
+
 ## Get Started
 
 ### 1. Install and setup Swift.
