@@ -5,8 +5,8 @@ class Tile {
   let score: Int
 
   init(letter: Character, score: Int) {
-      self.letter = letter
-      self.score = score
+    self.letter = letter
+    self.score = score
   }
 }
 
