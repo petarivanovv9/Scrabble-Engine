@@ -9,7 +9,7 @@ class Board {
   let nrows: Int
   let ncolumns: Int
   let middle: Coordinate
-  var cells: [[Cell]] = []
+  var cells: [[Cell]]
 
   typealias Coordinate = (row: Int, col: Int)
 
@@ -17,10 +17,14 @@ class Board {
     nrows = dims.0
     ncolumns = dims.1
     middle = (row: nrows / 2, col: ncolumns / 2)
-    cells = Array(
-      repeating: Array(repeating: Cell(), count: ncolumns),
-      count: nrows
-    )
+		cells = []
+		for _ in 0..<nrows {
+			var row : [Cell] = []
+			for _ in 0..<ncolumns {
+				row.append(Cell())
+			}
+			cells.append(row)
+		}
   }
 
   convenience init?(dim: Int) {
@@ -48,14 +52,17 @@ class Board {
   // subscript(coordinate: Coordinate) -> Cell {
   subscript(row: Int, col: Int) -> Cell {
     get {
+			print("\(row) - \(col)")
       // assert(indexIsValid(row: coordinate.row, column: coordinate.col), "Index out of range")
       assert(indexIsValid(row, col), "Index out of range")
       return cells[row][col]
     }
     set {
       // assert(indexIsValid(row: coordinate.row, column: coordinate.col), "Index out of range")
+			// print(indexIsValid(row, col))
       assert(indexIsValid(row, col), "Index out of range")
-      cells[row][col] = newValue
+			// print(cells)
+			cells[row][col] = newValue
     }
   }
 
