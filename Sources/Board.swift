@@ -127,6 +127,10 @@ class Board {
       return addWordCalcHelper(tiles_word, start_row_col, direction)
     }
   }
+
+	func saveBoardToFile() {
+		Parser.writeToFile(content: "HOOHOHO", filePath: FileManager.default.currentDirectoryPath + "/Sources/new_saved_game.txt")
+	}
 }
 
 extension Board: CustomStringConvertible {

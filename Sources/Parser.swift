@@ -139,4 +139,25 @@ class Parser {
 
     return savedGameData
   }
+
+  static func writeToFile(content: String, filePath: String) {
+    let contentToAppend = content+"\n"
+    // let filePath = FileManager.default.currentDirectoryPath + "/Sources/new_saved_game.txt"
+
+    // check if file exists
+    if let fileHandle = FileHandle(forWritingAtPath: filePath) {
+        let data = contentToAppend.data(using: String.Encoding.utf8)
+        // append to file
+        fileHandle.seekToEndOfFile()
+        fileHandle.write(data!)
+    }
+    else {
+        // create new file
+        do {
+          try contentToAppend.write(toFile: filePath, atomically: false, encoding: String.Encoding.utf8)
+        } catch {
+          print("Error creating \(filePath)")
+        }
+    }
+}
 }
