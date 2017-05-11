@@ -73,15 +73,11 @@ class Board {
     return cells[middle.row][middle.col].hasTile() == false
   }
 
-  private func addWordHelper(_ tiles: [Tile], _ start: Coordinate, _ direction: Direction) {
-
+  private func addWordCalcHelper(_ tiles: [Tile], _ start: Coordinate, _ direction: Direction) -> Int {
+		var score = 0
+		var ws_multipliers: [Int] = []
     for (indx, tile) in tiles.enumerated() {
-      // var bonus_multiplier = 1
-      // if curr_cell.bonusType != nil {
-      //   bonus_multiplier = curr_cell.bonusType!
-      // }
-      var curr_indx = start
-
+			var curr_indx = start
       switch direction {
         case .Horizontal:
           curr_indx.col = curr_indx.col + indx
@@ -89,10 +85,30 @@ class Board {
           curr_indx.row = curr_indx.row + indx
       }
 
+			var ls_multiplier = 1
+			let curr_cell = self[curr_indx.row, curr_indx.col]
+			if curr_cell.bonusType != nil {
+				if curr_cell.bonusType! == "WS" {
+					ws_multipliers.append(curr_cell.bonusMultiplier!)
+				} else {
+					ls_multiplier = curr_cell.bonusMultiplier!
+				}
+			}
+
       if self[curr_indx.row, curr_indx.col].hasTile() == false {
         self[curr_indx.row, curr_indx.col].setTile(tile: tile)
+				score = score + tile.score * ls_multiplier
+			}
+			else if self[curr_indx.row, curr_indx.col].hasTile() == true
+				&& self[curr_indx.row, curr_indx.col].tile!.letter == tile.letter {
+				score = score + tile.score * ls_multiplier
 			}
     }
+
+		for i in ws_multipliers {
+			score = score * i
+		}
+		return score
   }
 
   // returns the score of the word
@@ -107,9 +123,8 @@ class Board {
       return 0
     } else {
       // put the tiles on the board
-      addWordHelper(tiles_word, start_row_col, direction)
-      // calculate the score of the word
-      return 0
+			// calculate the score of the word
+      return addWordCalcHelper(tiles_word, start_row_col, direction)
     }
   }
 }

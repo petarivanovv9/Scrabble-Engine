@@ -5,6 +5,7 @@ let path = FileManager.default.currentDirectoryPath
 let game_config_file = "\(path)/Sources/game_configurations.txt"
 let saved_game_file  = "\(path)/Sources/saved_game.txt"
 
+print("-------------------------------------------------------------")
 var game_config = Parser.parseGameConfiguration(path: game_config_file)!
 print("[game_config]")
 print(game_config)
@@ -15,12 +16,11 @@ print(saved_game_data)
 print("\n")
 
 var board = Board(dims: game_config.board_dims)
-// print(board)
+
 for bonus in game_config.bonuses {
   let curr_cell = Cell(bonusType: bonus.bonusType, bonusMultiplier: bonus.bonusMultiplier)
   board[bonus.coordinates.0, bonus.coordinates.1] = curr_cell
 }
-// print(board)
 
 for turn in saved_game_data.turns {
   print(turn)
@@ -28,7 +28,7 @@ for turn in saved_game_data.turns {
 
   let player_word_score = board.addWord(tiles_word: player_word_tiles, start_row_col: turn.start_pos, direction: turn.direction)
   print(player_word_score)
-  print("----------------------------------")
+  print("-------------------------------------------------------------")
 }
 
 print(board)
