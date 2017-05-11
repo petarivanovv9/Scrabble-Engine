@@ -64,8 +64,23 @@ class Board {
   }
 
   // checks is it possible to write a word on the board
-  private func tryWord(_ tiles_word: [Tile], _ start_row_col: Coordinate, _ direction: Direction) -> Bool {
-    return true
+  private func tryWord(_ tiles: [Tile], _ letters_count: Int, _ start_row_col: Coordinate, _ direction: Direction) -> Bool {
+		if direction == .Horizontal {
+			for i in 0..<letters_count {
+				if self[start_row_col.row, start_row_col.col + i].hasTile() == true {
+					// && self[start_row_col.row, start_row_col.col + i].tile!.letter != tiles[i].letter {
+					return false
+				}
+			}
+		} else {
+			for i in 0..<letters_count {
+				if self[start_row_col.row + i, start_row_col.col].hasTile() == true {
+					// && self[start_row_col.row, start_row_col.col + i].tile!.letter != tiles[i].letter {
+					return false
+				}
+			}
+		}
+		return true
   }
 
   // check the center cell of the board
@@ -111,13 +126,13 @@ class Board {
 		return score
   }
 
-  // returns the score of the word
+  // returns the score of the word and add tiles to the board
   func addWord(tiles_word: [Tile], start_row_col: Coordinate, direction: Direction) -> Int {
 		if self.isEmpty() && start_row_col != middle {
 			print("The first word should start from the middle of the board!")
 			return 0
 		}
-    if tryWord(tiles_word, start_row_col, direction) == false
+    if tryWord(tiles_word, tiles_word.count, start_row_col, direction) == false
       || wordCoordinatesAreValid(start_row_col, direction, tiles_word.count) == false {
       print("Can't write the word on the board!")
       return 0
@@ -129,9 +144,6 @@ class Board {
   }
 
 	func saveBoardToFile() {
-		// "0 0 A 1"
-		// TODO: при parse-ването на файла трябва да проверя дали е буква или бонус
-		// TODO: и съответно да знам дали да променя клетката или да добавя плочка в/у нея
 		let new_saved_game_file = FileManager.default.currentDirectoryPath + "/Sources/new_saved_game.txt"
 
 		Parser.writeToFile(content: "--BOARD--", filePath: new_saved_game_file)
