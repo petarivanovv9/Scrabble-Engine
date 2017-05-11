@@ -1,4 +1,4 @@
-import Foundatio
+import Foundation
 
 
 let path = FileManager.default.currentDirectoryPath
@@ -8,7 +8,6 @@ let saved_game_file  = "\(path)/Sources/saved_game.txt"
 var game_config = Parser.parseGameConfiguration(path: game_config_file)!
 print("[game_config]")
 print(game_config)
-print("\n")
 
 var saved_game_data = Parser.parseSavedGameData(path: saved_game_file)!
 print("[saved_game_data]")

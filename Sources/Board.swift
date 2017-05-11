@@ -41,9 +41,9 @@ class Board {
 
     switch direction {
       case .Horizontal:
-        end_index_is_valid = indexIsValid(coordinates.row, coordinates.col + letters_count)
+        end_index_is_valid = indexIsValid(coordinates.row, coordinates.col + letters_count - 1)
       case .Vertical:
-        end_index_is_valid = indexIsValid(coordinates.row + letters_count, coordinates.col)
+        end_index_is_valid = indexIsValid(coordinates.row + letters_count - 1, coordinates.col)
     }
 
     return start_index_is_valid && end_index_is_valid
@@ -97,6 +97,10 @@ class Board {
 
   // returns the score of the word
   func addWord(tiles_word: [Tile], start_row_col: Coordinate, direction: Direction) -> Int {
+		if self.isEmpty() && start_row_col != middle {
+			print("The first word should start from the middle of the board!")
+			return 0
+		}
     if tryWord(tiles_word, start_row_col, direction) == false
       || wordCoordinatesAreValid(start_row_col, direction, tiles_word.count) == false {
       print("Can't write the word on the board!")
