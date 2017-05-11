@@ -1,20 +1,21 @@
 # Scrabble-Engine
 
 ## Description
+Scrabble Engine written in Swift. That's a course project for the Swift-3 course at @ Sofia University.
 
 ## Documentation
 
-### class Board
+### Board.swift
 Here is the Board class that stores information about the scrabble board and enum Direction object.
 #### Properties
 #### Methods
 
-### class Cell
+### Cell.swift
 Here is the Cell class that stores information about single cell - is there a bonus and/or tile.
 #### Properties
 #### Methods
 
-### class Tile
+### Tile.swift
 Here is the Tile class that stores information about single tile such as letter and its score.
 #### Properties
 #### Methods
@@ -30,8 +31,8 @@ That's a file that store structs such as GameConfiguration and SavedGameData to 
 
 #### struct SavedGameData
 
-### class Parser
-That's a static class that class useful methods for parsing and extracting information from the configuration files.
+### Parser.swift
+That's a file that store information about static class which has useful methods for parsing and extracting information from the configuration files.
 #### Properties
 #### Methods
 
