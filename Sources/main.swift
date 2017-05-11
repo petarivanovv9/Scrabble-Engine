@@ -40,7 +40,7 @@ for turn in saved_game_data.turns {
   let player_word_tiles = Array(turn.word.characters).map { Tile(letter: $0, score: getLetterScore(game_config.tiles_occurences, $0)) }
 
   let player_word_score = board.addWord(tiles_word: player_word_tiles, start_row_col: turn.start_pos, direction: turn.direction)
-  print(player_word_score)
+  print("Player \(turn.player) scored \(player_word_score)")
   print("-------------------------------------------------------------")
 }
 
@@ -69,4 +69,5 @@ for (tile, occurences) in game_config.tiles_occurences {
 //// - в Board може да имам структура BoardSize, с 2 полета - редове и колони
 //// - може да имам Rack class to store the tiles
 //// - премахване на използваните плочки
+//// - използване на протоколи
 //

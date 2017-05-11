@@ -2,6 +2,10 @@ import Foundation
 
 class Parser {
 
+  ///
+  /// статична функция, която "взима" съдържанието на файл
+  /// и го прави на стринг
+  ///
   static func getEncodedFileContent(filename: String) -> String? {
     var file : String? = nil
     do {
@@ -15,6 +19,10 @@ class Parser {
     return file
   }
 
+  ///
+  /// статична функция, която взима всички редове(линии)
+  /// от подаден файл
+  ///
   static func getLines(file: String) -> [String] {
     let lines = file.components(separatedBy: "\n")
     return lines
@@ -24,6 +32,10 @@ class Parser {
     return lines.filter { $0.isEmpty == false }.filter { $0[$0.startIndex] != "#" }
   }
 
+  ///
+  /// parses the game configuration file
+  /// and returns GameConfiguration struct that could be nil
+  ///
   static func parseGameConfiguration(path: String) -> GameConfiguration? {
     var gameConfig = GameConfiguration()
 
@@ -84,6 +96,10 @@ class Parser {
     return gameConfig
   }
 
+  ///
+  /// parses the saved game configuration file
+  /// and returns SavedGameData struct that could be nil
+  ///
   static func parseSavedGameData(path: String) -> SavedGameData? {
     var savedGameData = SavedGameData()
 
