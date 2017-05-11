@@ -52,16 +52,13 @@ class Board {
   // subscript(coordinate: Coordinate) -> Cell {
   subscript(row: Int, col: Int) -> Cell {
     get {
-			print("\(row) - \(col)")
       // assert(indexIsValid(row: coordinate.row, column: coordinate.col), "Index out of range")
       assert(indexIsValid(row, col), "Index out of range")
       return cells[row][col]
     }
     set {
       // assert(indexIsValid(row: coordinate.row, column: coordinate.col), "Index out of range")
-			// print(indexIsValid(row, col))
       assert(indexIsValid(row, col), "Index out of range")
-			// print(cells)
 			cells[row][col] = newValue
     }
   }
@@ -91,11 +88,9 @@ class Board {
         case .Vertical:
           curr_indx.row = curr_indx.row + indx
       }
-      print(curr_indx)
 
       if self[curr_indx.row, curr_indx.col].hasTile() == false {
         self[curr_indx.row, curr_indx.col].setTile(tile: tile)
-				print("HERE")
 			}
     }
   }
