@@ -2,7 +2,9 @@ import Foundation
 
 
 let path = FileManager.default.currentDirectoryPath
-let game_config_file = "\(path)/Sources/game_configurations.txt"
+// let game_config_file = "\(path)/Sources/game_configurations.txt"
+let game_config_file = "\(path)/Sources/new_saved_game.txt"
+
 let saved_game_file  = "\(path)/Sources/saved_game.txt"
 
 // let new_saved_game_file  = "\(path)/Sources/new_saved_game.txt"
@@ -19,9 +21,17 @@ print("\n")
 
 var board = Board(dims: game_config.board_dims)
 
-for bonus in game_config.bonuses {
-  let curr_cell = Cell(bonusType: bonus.bonusType, bonusMultiplier: bonus.bonusMultiplier)
-  board[bonus.coordinates.0, bonus.coordinates.1] = curr_cell
+print(game_config.bonuses)
+
+for item in game_config.bonuses {
+  if item.bonusType != "WS" || item.bonusType != "LS" {
+    let curr_tile = Tile(letter: Character(item.bonusType), score: item.bonusMultiplier)
+    board[item.coordinates.0, item.coordinates.1].setTile(tile: curr_tile)
+  }
+  else {
+    let curr_cell = Cell(bonusType: item.bonusType, bonusMultiplier: item.bonusMultiplier)
+    board[item.coordinates.0, item.coordinates.1] = curr_cell
+  }
 }
 
 for turn in saved_game_data.turns {
