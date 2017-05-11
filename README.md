@@ -32,7 +32,7 @@ That's a file that store structs such as GameConfiguration and SavedGameData to 
 #### struct SavedGameData
 
 ### Parser.swift
-That's a file that store information about static class which has useful methods for parsing and extracting information from the configuration files.
+Here is the Player static class that has useful methods for parsing and extracting information from the configuration files.
 #### Properties
 #### Methods
 
