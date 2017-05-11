@@ -5,7 +5,7 @@ let path = FileManager.default.currentDirectoryPath
 let game_config_file = "\(path)/Sources/game_configurations.txt"
 let saved_game_file  = "\(path)/Sources/saved_game.txt"
 
-let new_saved_game_file  = "\(path)/Sources/new_saved_game.txt"
+// let new_saved_game_file  = "\(path)/Sources/new_saved_game.txt"
 
 print("-------------------------------------------------------------")
 var game_config = Parser.parseGameConfiguration(path: game_config_file)!
@@ -35,7 +35,21 @@ for turn in saved_game_data.turns {
 
 print(board)
 
+let new_saved_game_file = FileManager.default.currentDirectoryPath + "/Sources/new_saved_game.txt"
+
+do {
+  try FileManager.default.removeItem(atPath: new_saved_game_file)
+} catch {
+  print("Error removing \(new_saved_game_file)")
+}
+
 board.saveBoardToFile()
+Parser.writeToFile(content: "--LETTERS--", filePath: new_saved_game_file)
+
+for (tile, occurences) in game_config.tiles_occurences {
+  var line = "\(tile.letter) \(occurences) \(tile.score)"
+  Parser.writeToFile(content: line, filePath: new_saved_game_file)
+}
 
 
 /// TODO : !!!документация!!! - коментари, на проекта, класове и т.н.

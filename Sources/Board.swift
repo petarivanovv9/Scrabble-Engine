@@ -129,7 +129,33 @@ class Board {
   }
 
 	func saveBoardToFile() {
-		Parser.writeToFile(content: "HOOHOHO", filePath: FileManager.default.currentDirectoryPath + "/Sources/new_saved_game.txt")
+		// "0 0 A 1"
+		// TODO: при parse-ването на файла трябва да проверя дали е буква или бонус
+		// TODO: и съответно да знам дали да променя клетката или да добавя плочка в/у нея
+		let new_saved_game_file = FileManager.default.currentDirectoryPath + "/Sources/new_saved_game.txt"
+
+		Parser.writeToFile(content: "--BOARD--", filePath: new_saved_game_file)
+		Parser.writeToFile(content: "\(nrows) \(ncolumns)", filePath: new_saved_game_file)
+
+		for i in 0..<nrows {
+			for j in 0..<ncolumns {
+				var line = ""
+				if self[i, j].hasBonus() == true && self[i, j].hasTile() == true {
+					line += "\(i) \(j) \(self[i, j].bonusType!) \(self[i, j].bonusMultiplier!)"
+					line += "\n"
+					line += "\(i) \(j) \(self[i, j].tile!.letter) \(self[i, j].tile!.score)"
+				}
+				else if self[i, j].hasBonus() == true && self[i, j].hasTile() == false {
+					line += "\(i) \(j) \(self[i, j].bonusType!) \(self[i, j].bonusMultiplier!)"
+				}
+				else if self[i, j].hasBonus() == false && self[i, j].hasTile() == true {
+					line += "\(i) \(j) \(self[i, j].tile!.letter) \(self[i, j].tile!.score)"
+				}
+				if line != "" {
+					Parser.writeToFile(content: line, filePath: new_saved_game_file)
+				}
+			}
+		}
 	}
 }
 

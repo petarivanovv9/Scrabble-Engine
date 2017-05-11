@@ -17,7 +17,7 @@ class Cell {
   }
 
   func hasBonus() -> Bool {
-    return bonusType != ""
+    return bonusType != nil
   }
 
   func setTile(tile: Tile) {
