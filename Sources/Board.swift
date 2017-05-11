@@ -35,6 +35,9 @@ class Board {
     return row >= 0 && row < nrows && col >= 0 && col < ncolumns
   }
 
+	///
+	/// проверява дали координатите на думата са валидни
+	///
   private func wordCoordinatesAreValid(_ coordinates: Coordinate, _ direction: Direction, _ letters_count: Int) -> Bool {
     let start_index_is_valid = indexIsValid(coordinates.row, coordinates.col)
     var end_index_is_valid: Bool
@@ -63,8 +66,11 @@ class Board {
     }
   }
 
-  // checks is it possible to write a word on the board
-  private func tryWord(_ tiles: [Tile], _ letters_count: Int, _ start_row_col: Coordinate, _ direction: Direction) -> Bool {
+	///
+  /// checks is it possible to write a word on the board
+	/// като проверява дали има плочки върху които ще се изписва думата
+	///
+	private func tryWord(_ tiles: [Tile], _ letters_count: Int, _ start_row_col: Coordinate, _ direction: Direction) -> Bool {
 		if direction == .Horizontal {
 			for i in 0..<letters_count {
 				if self[start_row_col.row, start_row_col.col + i].hasTile() == true {
@@ -83,11 +89,18 @@ class Board {
 		return true
   }
 
-  // check the center cell of the board
-  func isEmpty() -> Bool {
+	///
+  /// check the center cell of the board
+	///
+	func isEmpty() -> Bool {
     return cells[middle.row][middle.col].hasTile() == false
   }
 
+	///
+	///	това е помощна функция
+	///	добавя плочките за думата върху дъската
+	/// и пресметя точките от написаната дума
+	///
   private func addWordCalcHelper(_ tiles: [Tile], _ start: Coordinate, _ direction: Direction) -> Int {
 		var score = 0
 		var ws_multipliers: [Int] = []
@@ -126,8 +139,10 @@ class Board {
 		return score
   }
 
-  // returns the score of the word and add tiles to the board
-  func addWord(tiles_word: [Tile], start_row_col: Coordinate, direction: Direction) -> Int {
+	///
+  /// returns the score of the word and add tiles to the board
+	///
+	func addWord(tiles_word: [Tile], start_row_col: Coordinate, direction: Direction) -> Int {
 		if self.isEmpty() && start_row_col != middle {
 			print("The first word should start from the middle of the board!")
 			return 0
@@ -143,6 +158,10 @@ class Board {
     }
   }
 
+	///
+	/// запазваме моментното съдържание на дъската във файл
+	/// като бонусите и плочките върху клетките от дъската
+	///
 	func saveBoardToFile() {
 		let new_saved_game_file = FileManager.default.currentDirectoryPath + "/Sources/new_saved_game.txt"
 
