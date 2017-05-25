@@ -158,7 +158,6 @@ class Parser {
 
   static func writeToFile(content: String, filePath: String) {
     let contentToAppend = content+"\n"
-    // let filePath = FileManager.default.currentDirectoryPath + "/Sources/new_saved_game.txt"
 
     // check if file exists
     if let fileHandle = FileHandle(forWritingAtPath: filePath) {
