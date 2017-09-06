@@ -1,7 +1,7 @@
 # Scrabble-Engine
 
 ## Description
-Scrabble Engine written in Swift. That's a course project for the Swift-3 course at @ Sofia University.
+Scrabble Engine written in Swift. That's a course project for the Swift-3 course at @ Sofia University based in Sofia, Bulgaria.
 
 ## Documentation
 
